@@ -7,7 +7,12 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { useState } from 'react';
 import axios from 'axios';
 import  { useNavigate } from "react-router-dom";
+import Error_msg from '../Alert/Alert.jsx';
 import  './Modal.css';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 import {
   MDBBtn,
@@ -29,32 +34,100 @@ import {
   const [password,setPassword] = useState();
   const [login_email,setLoginemail] = useState();
   const [login_password,setLoginpassword] = useState();
+  const [showError, setShowError] = useState(false);
+  const [showErrormsg, setShowErrormsg] = useState("");
   const navigate = useNavigate();
 
-    const handleSignin = async (e) =>{
+    const handleSignin =  (e) =>{
         e.preventDefault()
         axios.post('http://localhost:5555/sign-in',{firstname,lastname,email,phone,password})
         .then(result => {
-            console.log(result);
-            setToggleOneModal(!toggleOneModal)
-            navigate("/");
+            if(result.data === "Email already exists"){
+              console.log(result.data)
+              toast('Email already exists', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: 0,
+                theme: "dark",
+                style :{
+                  width : "fit-content",
+                  fontFamily : "Kanit"
+                },
+                closeButton : <button style={{display :"none"}}></button>
+                });
+              setShowErrormsg("Email already used");
+              setShowError(true);
+            }
+            else{
+              setShowError(false);
+              console.log(result);
+              setToggleOneModal(!toggleOneModal)
+              navigate("/")
+            }
         })
         .catch(err => console.log(err));
     }
 
-    const handleLogin = async (e) =>{
+    const handleLogin =  (e) =>{
       e.preventDefault()
       axios.post('http://localhost:5555/login',{login_email,login_password})
       .then(result => {
-          console.log(result);
-          setToggleTwoModal(!toggleOneModal)
+        if(result.data === "No user with this email"){
+          toast('No user with this email', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "dark",
+            style :{
+              width : "fit-content",
+              fontFamily : "Kanit"
+            },
+            closeButton : <button style={{display :"none"}}></button>
+            });
+            console.log(result);
+          setShowErrormsg("No user with this email");
+          setShowError(true);
+        }
+        else if(result.data === "Wrong Password"){
+          toast('Wrong Password', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "dark",
+            style :{
+              width : "fit-content",
+              fontFamily : "Kanit"
+            },
+            closeButton : <button style={{display :"none"}}></button>
+            });
+          setShowErrormsg("Wrong Password");
+          setShowError(true);
+        }
+        else{
+          setShowError(false);
+          setToggleTwoModal(!toggleTwoModal);
           navigate("/");
+        }
+        console.log(result);
       })
       .catch(err => console.log(err));
   }
 
+
   return (
     <>
+      <ToastContainer />
+
+    
       <MDBBtn onClick={() => setToggleOneModal(!toggleOneModal)}>Join Us</MDBBtn>
 
       <MDBModal  open={toggleOneModal} onClose={() => setToggleOneModal(false)} tabIndex='-1'>
@@ -106,6 +179,7 @@ import {
               </form>
               <p>You already have an account ? <button style={{backgroundColor:"#f0eeed",  color:"black",fontSize:"1rem",width:"fit-content"}}
                 onClick={() => {
+                  setShowError(false);
                   setToggleOneModal(!toggleOneModal);
                   setTimeout(() => {
                     setToggleTwoModal(!toggleTwoModal);
@@ -114,7 +188,7 @@ import {
               >
               Login
               </button></p>
-              
+              <Error_msg show = {showError} msg ={showErrormsg} />   
             </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>
@@ -137,29 +211,30 @@ import {
                 <div className="d-flex flex-row align-items-center ">
                     <MdEmail style={{margin:"5px",fontSize:"1.7rem",color:"#a08ae8"}} />
                     <div className="form-outline flex-fill mb-0">
-                      <input type="email" name="login_email" id="email"  className="login-input" placeholder="Email" required  />
+                      <input onChange={(e) => setLoginemail(e.target.value)} type="email" name="login_email" id="email"  className="login-input" placeholder="Email" required  />
                     </div>
                 </div>
 
                 <div className="d-flex flex-row align-items-center ">
                   <HiLockClosed style={{margin:"5px",fontSize:"1.7rem",color:"#a08ae8"}} />
                     <div className="form-outline flex-fill mb-0">
-                      <input type="password" name="login_password" id="password" className="login-input" placeholder="Password" required />
+                      <input onChange={(e) => setLoginpassword(e.target.value)} type="password" name="login_password" id="password" className="login-input" placeholder="Password" required />
                     </div>
                 </div>
                 <button type="submit" className="sign-btn">Login</button>
                 </form>
                 <p>Create a new account ?<button style={{backgroundColor:"#f0eeed",  color:"black",fontSize:"1rem",width:"fit-content"}}
                 onClick={() => {
+                  setShowError(false);
                   setToggleTwoModal(!toggleTwoModal);
                   setTimeout(() => {
                     setToggleOneModal(!toggleOneModal);
                   }, 200);
                 }}
               >
-              Sign Up
+              Sign In
               </button></p>
-
+              <Error_msg show = {showError} msg ={showErrormsg} />
             </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>

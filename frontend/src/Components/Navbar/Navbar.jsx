@@ -14,7 +14,7 @@ import Signin from '../Modals/Signin';
 function AppNavbar(){
     return(
         <>
-            <Navbar sticky="top" expand="lg" className="navbar">
+            <Navbar sticky="top" expand="lg">
                 <Container>
                     <Navbar.Brand className="nav-brand" href="/"><img src= {logo} alt="logo" /></Navbar.Brand>
                     <Navbar.Toggle  className='toggler' aria-controls="basic-navbar-nav" />
@@ -26,9 +26,11 @@ function AppNavbar(){
                             <Nav.Link href="/clubs"><BsCalendar4Event /> Clubs</Nav.Link>
                             <Nav.Link href="about"><GiHelp /> About</Nav.Link>
                         </Nav>
+                        
                         <div className= "sub">
-                                <Signin />
+                            <Signin />
                         </div>
+   
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

@@ -2,6 +2,8 @@ import { Routes,Route } from "react-router-dom";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Clubs from "./pages/Clubs";
@@ -13,6 +15,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <AppNavbar />
       < Routes>
         <Route path="/"  element={<Home />} />
