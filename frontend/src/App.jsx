@@ -16,8 +16,6 @@ function App() {
   return (
     <>
       <AppNavbar />
-      <HVid />
-      <GridLay />
       < Routes>
         <Route path="/"  element={<Home />} />
         <Route path="/about"  element={<About />} />
