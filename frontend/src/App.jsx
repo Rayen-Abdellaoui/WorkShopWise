@@ -1,7 +1,6 @@
 import { Routes,Route } from "react-router-dom";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
@@ -11,6 +10,8 @@ import WorkShop from "./pages/WorkShops";
 import Account from "./pages/Account";
 import AppNavbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
+
+
 function App() {
 
   return (

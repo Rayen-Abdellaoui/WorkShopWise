@@ -90,10 +90,9 @@ app.get("/logout",async (req,res) =>{
 })
 
 app.get("/api/username", (req,res) =>{
-    if(req.session.user){
-        res.send(req.session.user);
+        res.send("ray");
     }
-})
+)
 
 
 app.listen(PORT,() =>{
