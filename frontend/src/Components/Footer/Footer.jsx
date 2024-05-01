@@ -19,7 +19,7 @@ function Footer() {
       <footer className="footer">
         <div className="footer-container">
           <div className="parag-container">
-            <p>not sure where to get started?let us help you on your own personal learning journey</p>
+            <p>Looking for a partner to build your brand or design your product solution?</p>
             <button className='footer-button'>Let's GO <GrFormNext /></button>
           </div>
           <div className='links-container'>

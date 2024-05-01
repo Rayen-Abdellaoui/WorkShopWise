@@ -64,8 +64,9 @@ import {
             else{
               setShowError(false);
               console.log(result);
-              setToggleOneModal(!toggleOneModal)
-              navigate("/")
+              setToggleOneModal(!toggleOneModal);
+              navigate("/");
+              window.location.reload();
             }
         })
         .catch(err => console.log(err));
@@ -116,6 +117,7 @@ import {
           setShowError(false);
           setToggleTwoModal(!toggleTwoModal);
           navigate("/");
+          window.location.reload()
         }
         console.log(result);
       })

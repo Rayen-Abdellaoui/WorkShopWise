@@ -5,7 +5,8 @@ const session = require('express-session');
 const PORT = 5555;
 const mongoose = require('mongoose');
 const cors = require('cors');
-const UsersModel = require('./models/Users.js')
+const UsersModel = require('./models/Users.js');
+const WorkShopsModel = require('./models/WorkShops.js');
 
 const app = express();
 app.use(session({
@@ -90,11 +91,17 @@ app.get("/logout",async (req,res) =>{
 })
 
 app.get("/api/username", (req,res) =>{
-    if(req.session.user){
         res.send(req.session.user);
     }
-})
+)
 
+// WorkShops
+
+app.get("/workshops", async (req,res) =>{
+    const workshops = await WorkShopsModel.find();
+    res.json(workshops);
+}
+)
 
 app.listen(PORT,() =>{
     console.log(`Server listening to port ${PORT}`);
