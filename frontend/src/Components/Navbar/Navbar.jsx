@@ -31,7 +31,7 @@ function AppNavbar(){
                         <Nav className="me-auto coll">
                             <Nav.Link href="/"><BiHome /> Home</Nav.Link>
                             <Nav.Link href="/events">< BsCalendar2Date /> Events</Nav.Link>
-                            <Nav.Link href="/workshops"><GrWorkshop /> Workshops</Nav.Link>
+                            <Nav.Link href="/workshops/1"><GrWorkshop /> Workshops</Nav.Link>
                             <Nav.Link href="/clubs"><BsCalendar4Event /> Clubs</Nav.Link>
                             {user ? (<Nav.Link href="/account"><BsCalendar4Event /> Account</Nav.Link>) : 
                             (<></>)}                            
