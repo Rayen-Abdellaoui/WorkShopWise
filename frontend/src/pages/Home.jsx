@@ -1,5 +1,4 @@
 import Hvid from "../Components/homepagecomponents/homeVid";
-import GridLa from "../Components/homepagecomponents/gridLa";
 import Progl from "../Components/homepagecomponents/progressList";
 import Quest from "../Components/homepagecomponents/question";
 
