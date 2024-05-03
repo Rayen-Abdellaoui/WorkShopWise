@@ -4,7 +4,7 @@ import { MDBIcon } from 'mdb-react-ui-kit';
 
 export default function progList(){
     return(
-        <section className="timeline-section section-padding" id="section_3">
+        <section className="timeline-section section-padding reveal" id="section_3">
         <div className="section-overlay"></div>
   
         <div className="container">
