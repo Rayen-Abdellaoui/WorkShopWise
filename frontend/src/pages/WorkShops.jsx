@@ -45,20 +45,24 @@ function WorkShop(){
             <Routes>
             <Route path="/"  element={
                 <MDBContainer className="d-flex flex-column align-items-center ">
-                <div>
-    
-                </div>
                 <div className="d-flex align-items-center justify-items-center " style={{
                                     flexWrap : "wrap",
                                     width:"fit-content"
                                     }} >
                     {workshops.map((workshop) =>(
-                        <MDBCol key={workshop._id}><WorkShop_Card title={workshop.title} duration={workshop.duration}
-                         club={workshop.club}
-                         date={workshop.date}
-                         lang={workshop.lang}
-                         level={workshop.level}
-                          /></MDBCol>
+                        <MDBCol key={workshop._id}>
+                          <WorkShop_Card 
+                            title={workshop.title} 
+                            duration={workshop.duration}
+                            club={workshop.club}
+                            date={workshop.date}
+                            lang={workshop.lang}
+                            level={workshop.level}
+                            participants={workshop.participants}
+                            image={workshop.image}
+                            id={workshop._id}
+                          />
+                        </MDBCol>
                     ))}
 
 
