@@ -5,7 +5,7 @@ import "./homep2.css"
 
 export default function Colapssables(){
     return(
-        <section className="faq-section section-padding" id="section_4">
+        <section className="faq-section section-padding reveal" id="section_4">
         <div className="container " >
           <div className="row">
             <div className="col-lg-6 col-12">
