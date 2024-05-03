@@ -97,11 +97,62 @@ app.get("/api/username", (req,res) =>{
 
 // WorkShops
 
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../frontend/src/Components/WorkShop Card/uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
 app.get("/workshops", async (req,res) =>{
     const workshops = await WorkShopsModel.find();
     res.json(workshops);
 }
 )
+
+
+
+
+
+
+const TestModel = require('./models/Test.js');
+app.post("/api/workshop-img", upload.single("workshop_img"), async (req,res) =>{
+    const imageName = req.file.filename;
+    try {
+        await TestModel.create({workshop_img : imageName});
+        res.json("Image uploaded");
+      } catch (error) {
+        res.json({ status: error });
+      }
+    
+})
+
+app.get("/get-image", async (req, res) => {
+    try {
+        TestModel.find().then((data) => {
+        res.send({ data: data });
+      });
+    } catch (error) {
+      res.json({ status: error });
+    }
+  });
+
+app.get("/api/workshop/:id", async (req,res) =>{
+    const id = req.params.id;
+    const workshop = await WorkShopsModel.findOne({_id : id});
+    res.json(workshop);
+}
+)
+
+
+
 
 app.listen(PORT,() =>{
     console.log(`Server listening to port ${PORT}`);
