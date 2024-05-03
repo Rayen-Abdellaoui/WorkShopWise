@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const UsersModel = require('./models/Users.js');
 const WorkShopsModel = require('./models/WorkShops.js');
+const ClubModel = require('./models/Club.js');
 
 const app = express();
 app.use(session({
@@ -147,6 +148,7 @@ app.get("/get-image", async (req, res) => {
 app.get("/api/workshop/:id", async (req,res) =>{
     const id = req.params.id;
     const workshop = await WorkShopsModel.findOne({_id : id});
+    
     res.json(workshop);
 }
 )

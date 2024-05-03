@@ -9,7 +9,7 @@ const WorkShopsSchema = new mongoose.Schema({
     duration : Number,
     participants : { type: Number, default: 0 },
     image : { type: String, default: "default_workshop.jpg" },
-    trainers : Array
+    trainers : String
 });
 
 const WorkShopsModel = mongoose.model("workshops",WorkShopsSchema);

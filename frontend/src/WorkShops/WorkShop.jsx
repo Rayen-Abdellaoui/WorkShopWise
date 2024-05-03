@@ -14,9 +14,9 @@ import { FaRegFlag } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 
+
 function WorkShop(){
   const [workshop, setWorkshop] = useState([]);
-  const [trainers, settrainers] = useState([]);
   const workshopId  = useParams();
 
   useEffect(() => {
@@ -24,11 +24,6 @@ function WorkShop(){
       try {
         const response = await axios.get(`http://localhost:5555/api/workshop/${workshopId.id}`);
         setWorkshop(response.data);
-        console.log(workshop.trainers);
-        for(let i = 0 ;i < workshop.trainers.length; i++){
-          settrainers([...trainers,workshop.trainers[i]]);
-        }
-        console.log(trainers)
       } catch (err) {
         console.error('Error fetching workshops', err);
       }
@@ -49,21 +44,29 @@ function WorkShop(){
                     fontWeight : "500"
                   }}>{workshop.title} </span><br />
                   <span style={{
-                    fontSize : "2rem",
+                    fontSize : "2.3rem",
                     fontFamily : "Roboto Condensed",
                     fontWeight : "400"
                   }}>Training Offered by :</span> <br />
-                  {workshop.club} <br />
+                  <span style={{
+                    fontSize : "2rem",
+                    fontFamily : "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+                  }}><img src={`/src/Components/WorkShop%20Card//uploads/${workshop.club + ".png"}`}  style={{width : "40px",height : "40px",borderRadius:"10px" }} alt='Sample' />  {workshop.club} </span><br />
                   <span style={{
                     fontSize : "2rem",
                     fontFamily : "Roboto Condensed",
-                    fontWeight : "400"}}> Trainer(s) : </span> <br />
-                   
+                    fontWeight : "400"}}> Presented By : </span> <br />
+                    <span style={{
+                      fontSize : "2rem",
+                      fontFamily : "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
+                    }}><CgProfile/> {workshop.trainers}</span>
+                    
+
                 </p>
                 <MDBCard style={{width : "40%", height : "fit-content",backgroundColor : "#cdc7c3"}}>
                   <MDBCardImage src={`/src/Components/WorkShop%20Card//uploads/${workshop.image}`} position='top' alt='...' />
                   <MDBCardBody>
-                    <MDBCardText className="card-content flex-wrap">
+                    <MDBCardText  className="card-content flex-wrap">
                     <p style={{
                         fontSize : "1.3rem",
                         color : "black"
