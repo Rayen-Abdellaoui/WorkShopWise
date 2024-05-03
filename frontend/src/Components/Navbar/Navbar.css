@@ -1,11 +1,11 @@
 .navbar{
-    background-color: #f0eeed;
+    background-color: #806cdc;
     height: auto;
     display: flex;
-    padding: 10px;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
+
+
 .nav-brand img{
     width: 250px;
     height: auto;
@@ -15,6 +15,7 @@
     align-items: center;
     justify-content: center;
     flex: 2;
+
 
 }
 .navbar .nav-link {
