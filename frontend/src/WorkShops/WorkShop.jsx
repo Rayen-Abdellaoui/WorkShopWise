@@ -9,7 +9,7 @@ import {
   MDBBtn
 } from 'mdb-react-ui-kit';
 import '/src/Components/WorkShop Card/WorkShop_Card.css';
-import { FaSignal } from "react-icons/fa6";
+import { FaSchool } from "react-icons/fa";
 import { FaRegFlag } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
@@ -133,7 +133,7 @@ function WorkShop(){
                         color : "black"
                       }}>
                         <span style={{fontSize : "1.2rem",fontWeight : "bold",color : "black"}}>{workshop.participants} / {workshop.max_participants} participants</span> <br />
-                        <FaSignal /> Level: {workshop.level} <br />
+                        <FaSchool /> Class: {workshop.class} <br />
                         <FaRegFlag /> {workshop.lang} <br />
                         <FaVideo /> {workshop.duration} Hours session
                       </p>
