@@ -12,6 +12,7 @@ import AppNavbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Admin from './pages/Admin';
 import WorkShop from "./WorkShops/WorkShop.jsx";
+import MyWorkshop from "./pages/MyWorkShop.jsx";
 import { useEffect,useState } from "react";
 import axios from 'axios';
 
@@ -19,15 +20,19 @@ import axios from 'axios';
 
 function App() {
   const [user,setUser] = useState();
+  const [role,setRole] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       axios.get('http://localhost:5555/api/username', { withCredentials: true })
       .then(result => {
         if(result.status == 200){
-            setUser(result.data.username);
+          setUser(result.data.username);
+          setRole(result.data.role);
         }
         else{
-          setUser()
+          setUser();
+          setRole();
         }
         console.log(result);
       });
@@ -38,16 +43,16 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <AppNavbar user={user} />
+      <AppNavbar user={user} role={role} />
       < Routes>
         <Route path="/"  element={<Home />} />
         <Route path="/about"  element={<About />} />
-        <Route path="/clubs"  element={<Clubs />} />
+        <Route path="/contact-us"  element={<Clubs />} />
         <Route path="/workshops/1"  element={<WorkShops />} />
-        <Route path="/account"  element={<Account />} />
         <Route path="/account"  element={<Account />} />
         <Route path="/admin"  element={<Admin />} />
         <Route path="/workshop/:id"  element={<WorkShop />} />
+        <Route path="/myworkshop"  element={<MyWorkshop />} />
       </Routes>
       <Footer />
     </>
