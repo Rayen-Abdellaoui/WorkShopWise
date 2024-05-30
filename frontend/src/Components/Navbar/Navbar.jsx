@@ -7,6 +7,8 @@ import { BsCalendar4Event } from "react-icons/bs";
 import { GrWorkshop } from "react-icons/gr";
 import { GiHelp } from "react-icons/gi";
 import { BsCalendar2Date } from "react-icons/bs";
+import { RiContactsLine } from "react-icons/ri";
+import { LiaTelegramPlane } from "react-icons/lia";
 import logo from './logo.svg';
 import Signin from '../Modals/Signin';
 import { useEffect, useState } from 'react';
@@ -26,11 +28,12 @@ function AppNavbar(props){
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto coll">
                             <Nav.Link href="/"><BiHome /> Home</Nav.Link>
-                            <Nav.Link href="/events">< BsCalendar2Date /> Events</Nav.Link>
+                            {props.role == "User" ? (<Nav.Link href="/myworkshop">< BsCalendar2Date /> My WorkShops</Nav.Link>) : (<></>)} 
+                            {props.role == "Club" ? (<Nav.Link href="/club-profile"><BsCalendar4Event />Profile</Nav.Link>) : (<></>)} 
                             <Nav.Link href="/workshops/1"><GrWorkshop /> Workshops</Nav.Link>
-                            <Nav.Link href="/clubs"><BsCalendar4Event /> Clubs</Nav.Link>
-                            {props.user ? (<Nav.Link href="/account"><BsCalendar4Event /> Account</Nav.Link>) : 
-                            (<></>)}                            
+                            {props.role == "User" ? (<Nav.Link href="/account"><RiContactsLine /> Account</Nav.Link>) : 
+                            (<></>)}     
+                            <Nav.Link href="/contact"><LiaTelegramPlane /> Contact</Nav.Link>                       
                             <Nav.Link href="about"><GiHelp /> About</Nav.Link>
                         </Nav>
                         {props.user ? (<> <Logout /> </>) : 

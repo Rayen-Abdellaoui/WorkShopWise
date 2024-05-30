@@ -1,9 +1,8 @@
 import './Footer.css';
 import Nav from 'react-bootstrap/Nav';
 import { BiHome } from "react-icons/bi";
-import { BsCalendar4Event } from "react-icons/bs";
 import { GrWorkshop } from "react-icons/gr";
-import { RiContactsLine } from "react-icons/ri";
+import { LiaTelegramPlane } from "react-icons/lia";
 import { GiHelp } from "react-icons/gi";
 import { AiOutlinePhone } from "react-icons/ai";
 import { AiOutlineMail } from "react-icons/ai";
@@ -19,14 +18,13 @@ function Footer() {
       <footer className="footer">
         <div className="footer-container">
           <div className="parag-container">
-            <p>Looking for a partner to build your brand or design your product solution?</p>
+            <p>Looking for a partner to manage your WorkShops?</p>
             <button className='footer-button'>Let's GO <GrFormNext /></button>
           </div>
           <div className='links-container'>
             <Nav.Link href="/"><BiHome /> Home</Nav.Link>
-            <Nav.Link href="/events"><BsCalendar4Event /> Events</Nav.Link>
             <Nav.Link href="/workshops"><GrWorkshop /> Workshops</Nav.Link>
-            <Nav.Link href="/clubs"><RiContactsLine /> Clubs</Nav.Link>
+            <Nav.Link href="/contact"><LiaTelegramPlane /> Contact</Nav.Link>                       
             <Nav.Link href="about"><GiHelp /> About</Nav.Link>
           </div>
           <div className="socio-container">
