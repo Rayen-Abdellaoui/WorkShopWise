@@ -57,7 +57,7 @@ function WorkShop(){
                             club={workshop.club}
                             date={workshop.date}
                             lang={workshop.lang}
-                            level={workshop.level}
+                            class={workshop.class}
                             participants={workshop.participants}
                             image={workshop.image}
                             id={workshop._id}

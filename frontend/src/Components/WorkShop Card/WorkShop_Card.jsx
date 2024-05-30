@@ -8,9 +8,10 @@ import {
   MDBRow
 } from 'mdb-react-ui-kit';
 import  './WorkShop_Card.css';
-import { FaSignal } from "react-icons/fa6";
 import { FaRegFlag } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
+import { FaSchool } from "react-icons/fa";
+
 
 
 function WorkShop_Card(props) {
@@ -25,7 +26,7 @@ function WorkShop_Card(props) {
           <h1>{props.title}</h1>
           <p>
             <span style={{fontSize : "1.2rem",fontWeight : "bold"}}>{props.participants} participants</span> <br />
-            <FaSignal /> Level: {props.level} <br />
+            <FaSchool /> Class: {props.class} <br />
             <FaRegFlag /> {props.lang} <br />
             <FaVideo /> {props.duration} Hours session
           </p>
