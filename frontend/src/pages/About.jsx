@@ -111,57 +111,57 @@ function About(){
                                 <h6 class="subtitle">  </h6>
                         </div>
                         </div>
-                        <div class="row">
-                        <div class="col-lg-3 mb-4">
-                                <div class="row">
-                                <div class="col-md-12">
-                                <img src="/src/assets/RA.png" alt="wrapkit" class="img-fluid rounded-circle" />
+                        <div className="row">
+                        <div className="col-lg-3 mb-4">
+                                <div className="row">
+                                <div className="col-md-12">
+                                <img src="/src/assets/RA.png" alt="wrapkit" className="img-fluid rounded-circle" />
                                 </div>
-                                <div class="col-md-12 text-center">
-                                <div class="pt-2">
-                                <h5 class="mt-4 font-weight-medium mb-0">Rayen Abdellaoui</h5>
-                                <ul class="list-inline">
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-facebook"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-twitter"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-instagram"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-behance"></i></a></li>
+                                <div className="col-md-12 text-center">
+                                <div className="pt-2">
+                                <h5 className="mt-4 font-weight-medium mb-0">Rayen Abdellaoui</h5>
+                                <ul className="list-inline">
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-facebook"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-twitter"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-instagram"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-behance"></i></a></li>
                                 </ul>
                                 </div>
                                 </div>
                                 </div>
                         </div>
-                        <div class="col-lg-3 mb-4">
-                                <div class="row">
-                                <div class="col-md-12">
-                                <img src="/src/assets/RH.png" alt="wrapkit" class="img-fluid rounded-circle" />
+                        <div className="col-lg-3 mb-4">
+                                <div className="row">
+                                <div className="col-md-12">
+                                <img src="/src/assets/RH.png" alt="wrapkit" className="img-fluid rounded-circle" />
                                 </div>
-                                <div class="col-md-12 text-center">
-                                <div class="pt-2">
-                                <h5 class="mt-4 font-weight-medium mb-0">Rayen Heni</h5>
+                                <div className="col-md-12 text-center">
+                                <div className="pt-2">
+                                <h5 className="mt-4 font-weight-medium mb-0">Rayen Heni</h5>
                                 
-                                <ul class="list-inline">
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-facebook"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-twitter"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-instagram"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-behance"></i></a></li>
+                                <ul className="list-inline">
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-facebook"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-twitter"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-instagram"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-behance"></i></a></li>
                                 </ul>
                                 </div>
                                 </div>
                                 </div>
                         </div>
-                        <div class="col-lg-3 mb-4">
-                                <div class="row">
-                                <div class="col-md-12">
-                                <img src="/src/assets/AG.png" alt="wrapkit" class="img-fluid rounded-circle" />
+                        <div className="col-lg-3 mb-4">
+                                <div className="row">
+                                <div className="col-md-12">
+                                <img src="/src/assets/AG.png" alt="wrapkit" className="img-fluid rounded-circle" />
                                 </div>
-                                <div class="col-md-12 text-center">
-                                <div class="pt-2">
-                                <h5 class="mt-4 font-weight-medium mb-0">Ayoub Gharbi</h5>
-                                <ul class="list-inline">
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-facebook"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-twitter"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-instagram"></i></a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-decoration-none d-block px-1"><i class="icon-social-behance"></i></a></li>
+                                <div className="col-md-12 text-center">
+                                <div className="pt-2">
+                                <h5 className="mt-4 font-weight-medium mb-0">Ayoub Gharbi</h5>
+                                <ul className="list-inline">
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-facebook"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-twitter"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-instagram"></i></a></li>
+                                        <li className="list-inline-item"><a href="#" className="text-decoration-none d-block px-1"><i className="icon-social-behance"></i></a></li>
                                 </ul>
                                 </div>
                                 </div>
