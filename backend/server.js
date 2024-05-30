@@ -1,7 +1,7 @@
 const express  = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-
+const { connectToRabbitMQ, consumeFromQueue,publishToQueue } = require('./rabbitmq');
 
 
 const PORT = 5555;
@@ -161,51 +161,47 @@ app.get("/api/workshop/:id", async (req,res) =>{
 
 // Subscription
 
-app.get("/api/subscription/:id", async (req,res) =>{
-
+app.get("/api/subscription/:id", async (req, res) => {
     try {
-        if(req.session.user){
+        if (req.session.user) {
             const user_id = String(req.session.user.user_id);
-            const participations = await ParticipationsModel.findOne({user_id : user_id});
-            const workshop = await WorkShopsModel.findById(req.params.id);
-            if(participations){
-                if(participations.workshop_id.indexOf(req.params.id) == -1){
-                    if(workshop.participants == workshop.max_participants){
-                        return res.status(201).send("Can't add new Participants");
-                    }
-                    else{
-                        const p = workshop.participants + 1 ;
-                        await WorkShopsModel.updateOne({ _id: req.params.id },{ $set: {participants : p} });
-                        await ParticipationsModel.updateOne({ _id: participations._id },{ $set: {workshop_id : [...participations.workshop_id,String(workshop._id)]} });
-                        return res.status(200).send(`Participants Updated in workshop with id ${workshop.id}`);
-    
-                    }    
-                }
-                else{
-                    const p = workshop.participants - 1 ;
-                    await WorkShopsModel.updateOne({ _id: req.params.id },{ $set: {participants : p} });
-                    await ParticipationsModel.updateOne({ _id: participations._id },{ $set: {workshop_id : participations.workshop_id.filter(el => el !== String(workshop._id))} });
-                    return res.status(200).send(`Participants cancled for workshop with id ${workshop.id}`);
-                }
-            }
-            else{
-                await ParticipationsModel.create({user_id : user_id , workshop_id : String(workshop._id)});
-                if (!workshop) {
-                    return res.status(404).send('WorkShop not found');
-                }
-                return res.status(200).send(`Participants Updated in workshop with id ${workshop.id}`);
-            }
-        }
-        else{
+            const workshop_id = req.params.id;
+            const message = { user_id, workshop_id };
+
+            await publishToQueue('subscriptionQueue', message);
+            res.status(200).send("Subscription request received. Processing...");
+
+        } else {
             res.sendStatus(207);
         }
-
-        
     } catch (error) {
         res.status(400).send(error.message);
     }
+});
+
+async function startApp() {
+    try {
+        const { connection, channel } = await connectToRabbitMQ();
+        consumeFromQueue(channel);
+        console.log("RabbitMQ consumer started.");
+
+        app.listen(PORT,() =>{
+            console.log(`Server listening to port ${PORT}`);
+        });
+
+        // Gracefully close RabbitMQ connection on app termination
+        process.on('SIGINT', async () => {
+            await channel.close();
+            await connection.close();
+            console.log('RabbitMQ connection closed');
+            process.exit(0);
+        });
+    } catch (error) {
+        console.error("Failed to start the application:", error);
+    }
 }
-)
+
+startApp();
 
 app.get("/api/checksubscription/:id", async (req,res) =>{
     try {
@@ -237,6 +233,3 @@ app.get("/api/checksubscription/:id", async (req,res) =>{
 
 
 
-app.listen(PORT,() =>{
-    console.log(`Server listening to port ${PORT}`);
-});
