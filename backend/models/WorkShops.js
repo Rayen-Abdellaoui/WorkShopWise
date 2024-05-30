@@ -8,6 +8,7 @@ const WorkShopsSchema = new mongoose.Schema({
     lang : String,
     duration : Number,
     participants : { type: Number, default: 0 },
+    max_participants : Number ,
     image : { type: String, default: "default_workshop.jpg" },
     trainers : String
 });
