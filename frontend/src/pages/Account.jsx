@@ -3,6 +3,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { AwesomeButton, AwesomeButtonProgress, AwesomeButtonSocial,} from 'react-awesome-button';
 import './Account.css'
+import ImageUpload from '../Components/ImageUpload';
 
 function Account() {
   return (
@@ -14,8 +15,7 @@ function Account() {
                 <MDBRow className="g-0">
                   <MDBCol md="4" className="gradient-custom text-center text-white"
                     style={{ backgroundColor: "#18122B", borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
-                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                      alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
+                    <ImageUpload></ImageUpload>
                     <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
                     <MDBCardText>Web Designer</MDBCardText>
                   </MDBCol>
