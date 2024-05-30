@@ -12,14 +12,33 @@ import AppNavbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Admin from './pages/Admin';
 import WorkShop from "./WorkShops/WorkShop.jsx";
+import { useEffect,useState } from "react";
+import axios from 'axios';
+
 
 
 function App() {
+  const [user,setUser] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.get('http://localhost:5555/api/username', { withCredentials: true })
+      .then(result => {
+        if(result.status == 200){
+            setUser(result.data.username);
+        }
+        else{
+          setUser()
+        }
+        console.log(result);
+      });
+    };
+    fetchData();
+  }, []); 
 
   return (
     <>
       <ToastContainer />
-      <AppNavbar />
+      <AppNavbar user={user} />
       < Routes>
         <Route path="/"  element={<Home />} />
         <Route path="/about"  element={<About />} />

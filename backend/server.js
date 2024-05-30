@@ -1,5 +1,7 @@
 const express  = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 
 
 const PORT = 5555;
@@ -8,26 +10,24 @@ const cors = require('cors');
 const UsersModel = require('./models/Users.js');
 const WorkShopsModel = require('./models/WorkShops.js');
 const ClubModel = require('./models/Club.js');
+const ParticipationsModel = require('./models/Participations.js');
 
 const app = express();
 app.use(session({
     secret: "securite sa7bi",
     resave:false,
     saveUninitialized: false,
-    cookie: { secure: false } 
+    cookie: { secure: false } ,
 }))
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true 
+}));
 
 mongoose.connect("mongodb://127.0.0.1:27017/PPP")
 .then(console.log("Connected to Database"));
 
-/*const isLoggedIn = (req, res, next) => {
-    if (!req.session.isLoggedIn) {
-        return res.status(401).send({ message: 'Unauthorized' });
-    }
-    next();
-};*/
 
 const isLoggedIn = (req, res, next) => { // use it for access to account page
     if (req.session.user) {
@@ -43,7 +43,7 @@ app.post("/login",  async(req, res) => {
     .then(user =>{
         if(user){
             if(user.password === login_password){
-                req.session.user = user.firstname;
+                req.session.user = {username : user.firstname, user_id : user._id};
                 res.send(req.session.user);
             }
             else
@@ -67,8 +67,9 @@ app.post("/sign-in",async (req,res) =>{
             res.send('Email already exists');
         }
         else{
-            req.session.user = firstname;
             UsersModel.create(req.body);
+            const new_user = await UsersModel.findOne({ email });
+            req.session.user = {username : new_user.firstname, user_id : new_user._id};
             res.send("Logged")
         }
     } 
@@ -82,7 +83,7 @@ app.post("/sign-in",async (req,res) =>{
 app.get("/logout",async (req,res) =>{
     try {
         req.session.destroy(() => {
-            res.send('You have been logged out.');
+        res.send("Log out Succ");
         });
     } 
     catch (err) {
@@ -91,8 +92,13 @@ app.get("/logout",async (req,res) =>{
 
 })
 
-app.get("/api/username", (req,res) =>{
-        res.send(req.session.user);
+app.get("/api/username", async (req,res) =>{
+    if(req.session.user){
+        res.status(200).send(req.session.user);
+    }
+    else{
+        res.sendStatus(202);
+    }
     }
 )
 
@@ -152,6 +158,81 @@ app.get("/api/workshop/:id", async (req,res) =>{
     res.json(workshop);
 }
 )
+
+// Subscription
+
+app.get("/api/subscription/:id", async (req,res) =>{
+
+    try {
+        if(req.session.user){
+            const user_id = String(req.session.user.user_id);
+            const participations = await ParticipationsModel.findOne({user_id : user_id});
+            const workshop = await WorkShopsModel.findById(req.params.id);
+            if(participations){
+                if(participations.workshop_id.indexOf(req.params.id) == -1){
+                    if(workshop.participants == workshop.max_participants){
+                        return res.status(201).send("Can't add new Participants");
+                    }
+                    else{
+                        const p = workshop.participants + 1 ;
+                        await WorkShopsModel.updateOne({ _id: req.params.id },{ $set: {participants : p} });
+                        await ParticipationsModel.updateOne({ _id: participations._id },{ $set: {workshop_id : [...participations.workshop_id,String(workshop._id)]} });
+                        return res.status(200).send(`Participants Updated in workshop with id ${workshop.id}`);
+    
+                    }    
+                }
+                else{
+                    const p = workshop.participants - 1 ;
+                    await WorkShopsModel.updateOne({ _id: req.params.id },{ $set: {participants : p} });
+                    await ParticipationsModel.updateOne({ _id: participations._id },{ $set: {workshop_id : participations.workshop_id.filter(el => el !== String(workshop._id))} });
+                    return res.status(200).send(`Participants cancled for workshop with id ${workshop.id}`);
+                }
+            }
+            else{
+                await ParticipationsModel.create({user_id : user_id , workshop_id : String(workshop._id)});
+                if (!workshop) {
+                    return res.status(404).send('WorkShop not found');
+                }
+                return res.status(200).send(`Participants Updated in workshop with id ${workshop.id}`);
+            }
+        }
+        else{
+            res.sendStatus(207);
+        }
+
+        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+)
+
+app.get("/api/checksubscription/:id", async (req,res) =>{
+    try {
+        if(req.session.user){
+            const user_id = String(req.session.user.user_id);
+            const participations = await ParticipationsModel.findOne({user_id : user_id});
+            if(participations){
+                if(participations.workshop_id.indexOf(req.params.id) == -1){
+                    res.sendStatus(200);   
+                }
+                else{
+                    res.sendStatus(203);
+                }
+            }
+            else{
+                res.sendStatus(203);
+            }
+        }
+        else{
+            res.sendStatus(206);
+        } 
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+)
+
 
 
 
