@@ -4,7 +4,7 @@ const WorkShopsSchema = new mongoose.Schema({
     club : String,
     title : String,
     date : String,
-    level : Number,
+    class : Number,
     lang : String,
     duration : Number,
     participants : { type: Number, default: 0 },

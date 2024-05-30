@@ -8,7 +8,11 @@ const UserSchema = new mongoose.Schema({
         type : Number,
         minlength: 8
     },
-    password : String
+    password : String,
+    role :{
+        type : String,
+        default : "User"
+    }
 });
 
 const UsersModel = mongoose.model("users",UserSchema);
