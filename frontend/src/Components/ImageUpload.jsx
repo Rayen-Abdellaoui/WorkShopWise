@@ -44,8 +44,8 @@ const ImageUpload = () => {
   }
 
   return (
-    <div className="relative h-96 w-96 m-8" style={{outerHeight:"5%",innerHeight:"5%"}}>
-      <img style={{height:"100px",width:"100px"}}
+    <div className="relative h-96 w-96 m-8" style={{paddingTop:"10%",paddingBottom:"10%"}}>
+      <img style={{height:"150px",width:"150px", borderRadius:"30%"}}
         src={avatarURL}
         alt ="Avatar"
         className="h-96 w-96 rounded-full" />
@@ -55,7 +55,7 @@ const ImageUpload = () => {
           type='submit'
           onClick={handleImageUpload}
           className='flex-center absolute bottom-12 right-14 h-9 w-9 rounded-full'>
-          <img
+          <img style={{height:"10px",width:"10px"}}
             src={EditIcon}
             alt="Edit"
             className='object-cover' />
