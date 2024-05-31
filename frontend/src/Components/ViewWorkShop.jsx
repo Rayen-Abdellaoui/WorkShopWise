@@ -1,10 +1,9 @@
-import MyWorkshopCard from "../Components/MyWorkShopCard/MyWorkShopCard";
+import MyWorkshopCard from "./MyWorkShopCard/MyWorkShopCard";
 import { MDBContainer } from 'mdb-react-ui-kit';
 import { MDBRow } from 'mdb-react-ui-kit';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import logo from '../assets/emptypage.jpg'
-
+import axios from 'axios';
 
 
 function MyWorkshop(){
@@ -36,6 +35,13 @@ function MyWorkshop(){
             </>
         );
     }
+    let l ;
+    if(workshops.length == 0){
+        l = false;
+    }
+    else{
+        l = true
+    }
     return(
         <>
                     {Array.isArray(workshops) && workshops.length > 0 ? (
@@ -59,7 +65,7 @@ function MyWorkshop(){
             <img src={logo} className='img-fluid' style={{width : "100%",maxHeight : "1000px" }} alt='Sample' />
             <div className='mask d-flex ' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
               <div className='d-flex justify-content-around align-items-center h-100 ' style={{width : "100%",flexWrap:"wrap"}}>
-                <p style={{fontSize:'4rem',fontFamily:'Rubik',color:'white'}}>Not Participated in Any WorkShop Yet</p>
+                <p style={{fontSize:'4rem',fontFamily:'Rubik',color:'white'}}>No WorkShops Yet</p>
               </div>
             </div>
           </div>

@@ -2,9 +2,32 @@ import { Sidenav, Nav } from 'rsuite';
 import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
 import MagicIcon from '@rsuite/icons/legacy/Magic';
 import './Profile.css';
-import Account from './Account';
+import ClubAccount from '../Components/ClubAccount';
+import ViewWorkShop from '../Components/EditWorkShops/ViewWorkShop';
+import AddWorkShop from '../Components/AddWorkShop';
+import {useEffect,useState} from 'react';
 
 function Profile(){
+    const [length, setLength] = useState(false);
+
+    useEffect(() => {
+        const fetchWorkshops = async () => {
+        try {
+            const response = await axios.get('http://localhost:5555/api/workshopslength',{ withCredentials: true });
+            if(response.status == 200){
+                setLength(true);
+            }
+            else{
+                setLength(false);
+            }
+            console.log(response);
+        } catch (err) {
+            console.error('Error fetching workshops', err);
+        }
+        };
+
+        fetchWorkshops();
+    }, []);
     return(
         <>
         <div style={{display:"flex"}}>
@@ -22,7 +45,9 @@ function Profile(){
                 </Sidenav.Body>
                 </Sidenav>
             </div>
-            <Account />
+            <AddWorkShop />
+            {length? (<> <ViewWorkShop /> </>) : 
+                (<p>gg</p>)} 
         </div>
         </>
     );

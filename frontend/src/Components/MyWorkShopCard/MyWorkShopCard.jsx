@@ -17,6 +17,14 @@ function MyWorkshopCard(props){
             console.error('Error fetching workshops', err);
         }
     }
+
+    let time;
+    if(props.time <12){
+      time = props.time + " am";
+    }
+    else{
+      time = props.time + " pm";
+    }
     return(
         <>
 
@@ -55,7 +63,7 @@ function MyWorkshopCard(props){
             {props.title}
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
-            {props.date}
+            {props.date} Time : {time}
           </Typography>
           <Sheet
             sx={{
@@ -84,7 +92,7 @@ function MyWorkshopCard(props){
               <Typography level="body-xs" fontWeight="lg" style={{color : "black", fontSize : "1.3rem" ,fontFamily : "Roboto Condensed"}}>
                 Class
               </Typography>
-              <Typography fontWeight="lg" style={{color:"black",fontSize:"1.1rem"}}>{props.class}</Typography>
+              <Typography fontWeight="lg" style={{color:"black",fontSize:"1.1rem"}}>{props.salle}</Typography>
             </div>
           </Sheet>
           <Box sx={{ display: 'flex', justifyContent:"space-around", flexWrap:"wrap" }}>

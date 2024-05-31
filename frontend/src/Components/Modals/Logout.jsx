@@ -1,13 +1,16 @@
 import axios from "axios";
 import {MDBBtn} from 'mdb-react-ui-kit';
 import  './Modal.css';
+import { useNavigate } from "react-router-dom";
 
 function Logout(){
+    const navigate = useNavigate();
     const handleLogout =  (e) =>{
         e.preventDefault()
         axios.get('http://localhost:5555/logout',{ withCredentials: true })
         .then(result => {
               console.log(result);
+              navigate("/");
               window.location.reload();
             }
         )

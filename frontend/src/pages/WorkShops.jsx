@@ -57,7 +57,8 @@ function WorkShop(){
                             club={workshop.club}
                             date={workshop.date}
                             lang={workshop.lang}
-                            class={workshop.class}
+                            salle={workshop.salle}
+                            time={workshop.time}
                             participants={workshop.participants}
                             image={workshop.image}
                             id={workshop._id}
@@ -67,7 +68,6 @@ function WorkShop(){
 
 
                 </div>
-                <Pagination  />
                 
                 </MDBContainer>
             } />
@@ -90,7 +90,6 @@ function WorkShop(){
                     <MDBCol ><WorkShop_Card /></MDBCol>
                     <MDBCol><WorkShop_Card /></MDBCol>
                 </div>
-                <Pagination  />
                 
                 </MDBContainer>
             } />
@@ -113,7 +112,6 @@ function WorkShop(){
                     <MDBCol ><WorkShop_Card /></MDBCol>
                     <MDBCol><WorkShop_Card /></MDBCol>
                 </div>
-                <Pagination  />
                 
                 </MDBContainer>
             } />
