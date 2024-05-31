@@ -59,7 +59,7 @@ app.post("/login",  async(req, res) => {
     .then(user =>{
         if(user){
             if(user.password === login_password){
-                req.session.user = {username : user.firstname, user_id : user._id, role : user.role};
+                req.session.user = {username : user.firstname,lastname : user.lastname, user_id : user._id, role : user.role};
                 res.send(req.session.user);
             }
             else
@@ -80,14 +80,14 @@ app.post("/club/login",  async(req, res) => {
     .then(club =>{
         if(club){
             if(club.password === login_password){
-                req.session.user = {username : club.name, user_id : club._id,role : club.role};
+                req.session.user = {username : club.club_name, user_id : club._id,role : club.role,lastname : club.lastname};
                 res.send(req.session.user);
             }
             else
                 res.send("Wrong Password");
         }
         else{
-            res.send("No Club with this email")
+            res.send("No club with this email")
         }
     })
     .catch(err => console.log(err));
@@ -106,7 +106,7 @@ app.post("/sign-in",async (req,res) =>{
         else{
             await UsersModel.create(req.body);
             const new_user = await UsersModel.findOne({ email });
-            req.session.user = {username : new_user.firstname, user_id : new_user._id,role : new_user.role};
+            req.session.user = {username : new_user.firstname, user_id : new_user._id,role : new_user.role,lastname : new_user.lastname};
             res.send("Logged")
         }
     } 
@@ -118,7 +118,7 @@ app.post("/sign-in",async (req,res) =>{
 
 //Club Sign in
 app.post("/club/sign-in",upload.single("club_img"),async (req,res) =>{
-    const { club_name ,club_img,email,password } = req.body;
+    const { club_name,email,password ,club_img} = req.body;
     const imageName = req.file.filename;
     try {
         const club = await ClubModel.findOne({ email });
@@ -129,7 +129,7 @@ app.post("/club/sign-in",upload.single("club_img"),async (req,res) =>{
         else{
             await ClubModel.create({club_name : club_name , club_img : imageName , email : email , password : password});
             const new_club = await ClubModel.findOne({ email });
-            req.session.user = {username : new_club.name, user_id : new_club._id,role : new_club.role};
+            req.session.user = {username : new_club.club_name, user_id : new_club._id,role : new_club.role};
             res.send("Logged")
         }
     } 
@@ -323,7 +323,79 @@ app.get("/api/checksubscription/:id", async (req,res) =>{
 }
 )
 
+// User Info
+app.post("/api/user-account",upload.single("profile_img"), async (req,res) =>{
+    try {
+        if(req.session.user){
+            const { firstname ,lastname,phone ,password } = req.body;
+            const imageName = req.file.filename;
+            const user = await UsersModel.findOne({ _id : req.session.user.user_id });
+            if (user) {
+                await UsersModel.updateMany(
+                    { _id: req.session.user.user_id },
+                    { $set: { firstname: firstname, lastname: lastname, phone: phone, password: password,profile_img : imageName } }
+                );                
+                const new_user = await UsersModel.findOne({ _id : req.session.user.user_id });
+                return res.json(new_user);
+            }
+            else{
+                res.status(204).send("No user with this id");
+            }
+        }
+        else{
+            res.sendStatus(206);
+        } 
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+)
 
+app.get("/api/username-account", async (req,res) =>{
+    try {
+        if(req.session.user){
+            const user = await UsersModel.findOne({ _id : req.session.user.user_id });
+            if (user) {
+                return res.send([user.firstname,user.lastname,user.email,user.phone,user.profile_img]);
+            }
+            else{
+                res.status(204).send("No user with this id");
+            }
+        }
+        else{
+            res.sendStatus(206);
+        } 
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+)
 
+//change user profile pic
+app.post("/api/user-profile-pic",upload.single("file"),async (req,res) =>{
+    const imageName = req.file.filename;
+    try {
+        if(req.session.user){
+            const user = await UsersModel.findOne({ _id : req.session.user.user_id });
+    
+            if (user) {
+                const result = await UsersModel.updateOne(
+                    { _id: req.session.user.user_id },
+                    { $set: { profile_img: imageName } });
+                res.json(result);
+            }
+            else{
+                res.status(204).send("login first")
+            }
+        }
+        else{
+            res.sendStatus(205);
+        }
+    } 
+    catch (err) {
+        console.log(err);
+    }
+
+})
 
 
