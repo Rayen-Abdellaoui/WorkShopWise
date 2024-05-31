@@ -13,6 +13,7 @@ import Footer from "./Components/Footer/Footer";
 import Admin from './pages/Admin';
 import WorkShop from "./WorkShops/WorkShop.jsx";
 import MyWorkshop from "./pages/MyWorkShop.jsx";
+import Profile from "./pages/Profile.jsx";
 import { useEffect,useState } from "react";
 import axios from 'axios';
 
@@ -20,6 +21,7 @@ import axios from 'axios';
 
 function App() {
   const [user,setUser] = useState();
+  const [lastname,setLastname] = useState();
   const [role,setRole] = useState();
 
   useEffect(() => {
@@ -29,6 +31,7 @@ function App() {
         if(result.status == 200){
           setUser(result.data.username);
           setRole(result.data.role);
+          setLastname(result.data.lastname);
         }
         else{
           setUser();
@@ -51,8 +54,9 @@ function App() {
         <Route path="/workshops/1"  element={<WorkShops />} />
         <Route path="/account"  element={<Account />} />
         <Route path="/admin"  element={<Admin />} />
-        <Route path="/workshop/:id"  element={<WorkShop />} />
+        <Route path="/workshop/:id"  element={<WorkShop role={role} />} />
         <Route path="/myworkshop"  element={<MyWorkshop />} />
+        <Route path="/profile"  element={<Profile />} />
       </Routes>
       <Footer />
     </>

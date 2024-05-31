@@ -1,37 +1,37 @@
-.btn {
+.btn1 {
     height: 59px;
     font-size: 19px;
     border-radius: 25px;
     padding: 0 50px;
   }
   
-  .btn.raised {
+  .btn1.raised {
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.25s;
   }
   
-  .btn:hover {
+  .btn1:hover {
     transform: translateY(-4px);
   }
   
-  .btn.primary {
+  .btn1.primary {
     background-color: #ba3bde;
     color: #ffffff;
   }
   
-  .btn.primary:hover {
+  .btn1.primary:hover {
     background-color: #424e6a;
   }
   
-  .btn.primary.dark {
+  .btn1.primary.dark {
     background-color: #4d1358;
   }
   
-  .btn.primary.light {
+  .btn1.primary.light {
     background-color: #d4d9e4;
   }
   
-  .btn.primary {
+  .btn1.primary {
     border: 0px solid #8c6e6e;
   }
   

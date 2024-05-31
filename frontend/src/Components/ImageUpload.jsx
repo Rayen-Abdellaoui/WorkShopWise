@@ -1,11 +1,15 @@
+
 import React, {useState, useRef} from 'react'
 import DefaultImage from "../assets/upload-photo-here.png";
 import EditIcon from "../assets/edit.svg";
 import UploadingAnimation from "../assets/uploading.gif";
+import './Modals/Modal.css'
+import axios from 'axios';
+
 
 
 const ImageUpload = () => {
-  const [avatarURL, setAvatarURL] = useState(DefaultImage);
+  const [avatarURL, setAvatarURL] = useState("default_profile_image.png");
 
   const fileUploadRef = useRef();
 
@@ -22,22 +26,18 @@ const ImageUpload = () => {
 
       formData.append("file", uploadedFile);
       
-      // const cachedURL = URL.createObjectURL(uploadedFile);
-      // setAvatarURL(cachedURL);
 
-      const response = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
-        method: "post",
-        body: formData
-      });
-
-      if (response.status === 201) {
-        const data = await response.json();
-        setAvatarURL(data?.location);
-      }
+      axios.post('http://localhost:5555/api/user-profile-pic',formData,{headers: { "Content-Type": "multipart/form-data" },},{ withCredentials: true })
+      .then(response =>{
+        if(response.status == 200){
+          setAvatarURL(response.data.profile_img);
+          window.location.reload();
+        }
+      })
 
     } catch(error) {
       console.error(error);
-      setAvatarURL(DefaultImage);
+      setAvatarURL("default_profile_image.png");
     }
 
 
@@ -45,21 +45,18 @@ const ImageUpload = () => {
 
   return (
     <div className="relative h-96 w-96 m-8" style={{outerHeight:"5%",innerHeight:"5%"}}>
-      <img style={{height:"100px",width:"100px"}}
-        src={avatarURL}
+      <img style={{width : "150px",height:"150px",borderRadius:"50%",margin:"5px"}}
+        src={`src/Components/WorkShop Card/uploads/${avatarURL}`} 
         alt ="Avatar"
-        className="h-96 w-96 rounded-full" />
+         />
 
       <form id="form" encType='multipart/form-data'>
         <button
           type='submit'
           onClick={handleImageUpload}
-          className='flex-center absolute bottom-12 right-14 h-9 w-9 rounded-full'>
-          <img
-            src={EditIcon}
-            alt="Edit"
-            className='object-cover' />
-        </button>
+          className='sign-btn'
+          style={{width:"200px",minWidth :"100px",backgroundColor :"#18122B",fontFamily :"Rubik",fontSize : "1.0rem",fontWeight:"bold"}}>
+          Change photo</button>
         <input 
           type="file"
           id="file"
