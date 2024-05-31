@@ -21,6 +21,7 @@ function WorkShop(props){
   const [workshop, setWorkshop] = useState([]);
   const [buttonstatus, setButtonstatus] = useState(false);
   const [subscription, setSubscription] = useState(false);
+  const [pic, setPic] = useState(false);
   const workshopId  = useParams();
 
   useEffect(() => {
@@ -32,6 +33,10 @@ function WorkShop(props){
           setButtonstatus(true)
         }
         setWorkshop(response.data);
+        const result1 = await axios.get(`http://localhost:5555/api/clubimg/${response.data.club}`,{ withCredentials: true })
+        if(result1.status == 200){
+          setPic(result1.data);
+        }
         if(result.status == 200 || result.status == 206){
           setSubscription(false)
         }
@@ -90,6 +95,14 @@ function WorkShop(props){
     button = <MDBBtn onClick={handleSubscribtion} className="card-button">Participate</MDBBtn>;
   }
 
+  let time;
+  if(props.time <12){
+    time = workshop.time + " am";
+  }
+  else{
+    time = workshop.time + " pm";
+  }
+
   return(
         <>
           <ToastContainer />
@@ -111,7 +124,7 @@ function WorkShop(props){
                   <span style={{
                     fontSize : "2rem",
                     fontFamily : "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
-                  }}><img src={`/src/Components/WorkShop%20Card//uploads/${workshop.club + ".png"}`}  style={{width : "40px",height : "40px",borderRadius:"10px" }} alt='Sample' />  {workshop.club} </span><br />
+                  }}><img src={`/src/Components/WorkShop%20Card//uploads/${pic}`}  style={{width : "40px",height : "40px",borderRadius:"10px" }} alt='Sample' />  {workshop.club} </span><br />
                   <span style={{
                     fontSize : "2rem",
                     fontFamily : "Roboto Condensed",
@@ -130,13 +143,13 @@ function WorkShop(props){
                     <p style={{
                         fontSize : "1.3rem",
                         color : "black"
-                      }}>{workshop.date}</p>
+                      }}>{workshop.date} Time : {time}</p>
                       <p style={{
                         fontSize : "1.3rem",
                         color : "black"
                       }}>
                         <span style={{fontSize : "1.2rem",fontWeight : "bold",color : "black"}}>{workshop.participants} / {workshop.max_participants} participants</span> <br />
-                        <FaSchool /> Class: {workshop.class} <br />
+                        <FaSchool /> Class: {workshop.salle} <br />
                         <FaRegFlag /> {workshop.lang} <br />
                         <FaVideo /> {workshop.duration} Hours session
                       </p>

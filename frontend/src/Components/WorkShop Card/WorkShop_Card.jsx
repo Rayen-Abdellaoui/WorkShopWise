@@ -15,18 +15,25 @@ import { FaSchool } from "react-icons/fa";
 
 
 function WorkShop_Card(props) {
-
+  let time;
+  if(props.time <12){
+    time = props.time + " am";
+  }
+  else{
+    time = props.time + " pm";
+  }
   return (
     <MDBCard className='Work_Card'>
       <MDBCardImage src={`/src/Components/WorkShop%20Card//uploads/${props.image}`}  position='top' alt='WorkShop img' width={400} height={210} />
       <MDBCardBody>
         <MDBCardText className='card-content'>
           <h2>{props.club}</h2>
-          <p>{props.date}</p>
+          <p>{props.date} Time : {time} </p>
+          <p></p>
           <h1>{props.title}</h1>
           <p>
             <span style={{fontSize : "1.2rem",fontWeight : "bold"}}>{props.participants} participants</span> <br />
-            <FaSchool /> Class: {props.class} <br />
+            <FaSchool /> Class: {props.salle} <br />
             <FaRegFlag /> {props.lang} <br />
             <FaVideo /> {props.duration} Hours session
           </p>

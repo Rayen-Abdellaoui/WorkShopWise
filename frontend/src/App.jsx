@@ -13,7 +13,8 @@ import Footer from "./Components/Footer/Footer";
 import Admin from './pages/Admin';
 import WorkShop from "./WorkShops/WorkShop.jsx";
 import MyWorkshop from "./pages/MyWorkShop.jsx";
-import Profile from "./pages/Profile.jsx";
+import AddWorkShop from './Components/AddWorkShop'
+import ViewWorkShop from './Components/ViewWorkShop.jsx'
 import { useEffect,useState } from "react";
 import axios from 'axios';
 
@@ -56,7 +57,8 @@ function App() {
         <Route path="/admin"  element={<Admin />} />
         <Route path="/workshop/:id"  element={<WorkShop role={role} />} />
         <Route path="/myworkshop"  element={<MyWorkshop />} />
-        <Route path="/profile"  element={<Profile />} />
+        <Route path="/add-workshop"  element={<AddWorkShop />} />
+        <Route path="/club-workshop"  element={<ViewWorkShop />} />
       </Routes>
       <Footer />
     </>

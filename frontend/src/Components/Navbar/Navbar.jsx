@@ -9,6 +9,7 @@ import { GiHelp } from "react-icons/gi";
 import { BsCalendar2Date } from "react-icons/bs";
 import { RiContactsLine } from "react-icons/ri";
 import { LiaTelegramPlane } from "react-icons/lia";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import logo from './logo.svg';
 import Signin from '../Modals/Signin';
 import { useEffect, useState } from 'react';
@@ -27,9 +28,11 @@ function AppNavbar(props){
                     <Navbar.Toggle  className='toggler' aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto coll">
+                            
                             <Nav.Link href="/"><BiHome /> Home</Nav.Link>
                             {props.role == "User" ? (<Nav.Link href="/myworkshop">< BsCalendar2Date /> My WorkShops</Nav.Link>) : (<></>)} 
-                            {props.role == "Club" ? (<Nav.Link href="/club-profile"><BsCalendar4Event /> Profile</Nav.Link>) : (<></>)} 
+                            {props.role == "Club" ? (<Nav.Link href="/club-workshop"><BsCalendar4Event /> My WorkShop</Nav.Link>) : (<></>)}
+                            {props.role == "Club" ? (<Nav.Link href="/add-workshop"><IoIosAddCircleOutline /> Add WorkShop</Nav.Link>) : (<></>)} 
                             <Nav.Link href="/workshops/1"><GrWorkshop /> Workshops</Nav.Link>
                             {props.role == "User" ? (<Nav.Link href="/account"><RiContactsLine /> Account</Nav.Link>) : 
                             (<></>)}     

@@ -11,6 +11,7 @@ const UsersModel = require('./models/Users.js');
 const WorkShopsModel = require('./models/WorkShops.js');
 const ClubModel = require('./models/Club.js');
 const ParticipationsModel = require('./models/Participations.js');
+const ClubWorkShopsModel = require('./models/ClubWorkShops.js')
 
 const app = express();
 app.use(session({
@@ -127,7 +128,8 @@ app.post("/club/sign-in",upload.single("club_img"),async (req,res) =>{
             res.send('Email already used');
         }
         else{
-            await ClubModel.create({club_name : club_name , club_img : imageName , email : email , password : password});
+            const c = await ClubModel.create({club_name : club_name , club_img : imageName , email : email , password : password});
+            await ClubWorkShopsModel.create({club_id : c._id ,work_id : []});
             const new_club = await ClubModel.findOne({ email });
             req.session.user = {username : new_club.club_name, user_id : new_club._id,role : new_club.role};
             res.send("Logged")
@@ -178,19 +180,37 @@ app.get("/workshops", async (req,res) =>{
 app.get("/api/myworkshop", async (req, res) => {
     try {
         if (req.session.user) {
-            const user_id = String(req.session.user.user_id);
-            const participations = await ParticipationsModel.findOne({ user_id: user_id });
-
-            if (participations && participations.workshop_id.length > 0) {
-                const workshopPromises = participations.workshop_id.map(el => {
-                    return WorkShopsModel.findOne({ _id: el });
-                });
-                const workshops = await Promise.all(workshopPromises);
-
-                return res.json(workshops);
-            } else {
-                return res.status(207).send('No workshops participated in');
+            if(req.session.user.role == 'User'){
+                const user_id = String(req.session.user.user_id);
+                const participations = await ParticipationsModel.findOne({ user_id: user_id });
+    
+                if (participations && participations.workshop_id.length > 0) {
+                    const workshopPromises = participations.workshop_id.map(el => {
+                        return WorkShopsModel.findOne({ _id: el });
+                    });
+                    const workshops = await Promise.all(workshopPromises);
+    
+                    return res.json(workshops);
+                } else {
+                    return res.status(207).send('No workshops participated in');
+                }
             }
+            else{
+                const club_id = String(req.session.user.user_id);
+                const w = await ClubWorkShopsModel.findOne({ club_id: club_id });
+    
+                if (w && w.work_id.length > 0) {
+                    const workshopPromises = w.work_id.map(el => {
+                        return WorkShopsModel.findOne({ _id: el });
+                    });
+                    const workshops = await Promise.all(workshopPromises);
+    
+                    return res.json(workshops);
+                } else {
+                    return res.status(207).send('No workshops participated in');
+                }
+            }
+           
         } else {
             return res.send('login first');
         }
@@ -203,16 +223,35 @@ app.get("/api/myworkshop", async (req, res) => {
 app.get("/api/delete-myworkshop/:id", async (req, res) => {
     try {
         if (req.session.user) {
-            const user_id = String(req.session.user.user_id);
+            if(req.session.user.role == 'User'){
+                const user_id = String(req.session.user.user_id);
             const participations = await ParticipationsModel.findOne({ user_id: user_id });
+            const workshop = await WorkShopsModel.findById(req.params.id);
 
             if (participations && participations.workshop_id.length > 0) {
                 const result = await ParticipationsModel.updateOne(
                     { user_id: user_id },
                     { $pull: { workshop_id: req.params.id } })
+                    const p = workshop.participants - 1;
+                    await WorkShopsModel.updateOne({ _id: req.params.id }, { $set: { participants: p } });
                 return res.send("Workshop deleted");
             } else {
                 return res.status(207).send('No workshops participated in');
+            }
+            }
+            else{
+                const club_id = String(req.session.user.user_id);
+                const w = await ClubWorkShopsModel.findOne({ club_id: club_id });
+
+                if (w && w.work_id.length > 0) {
+                    const result = await ClubWorkShopsModel.updateOne(
+                        { club_id: club_id },
+                        { $pull: { work_id: req.params.id } })
+                    await WorkShopsModel.findByIdAndDelete({_id : req.params.id});
+                    return res.send("Workshop deleted");
+            } else {
+                return res.status(207).send('No workshops participated in');
+            }
             }
         } else {
             return res.send('login first');
@@ -327,20 +366,30 @@ app.get("/api/checksubscription/:id", async (req,res) =>{
 app.post("/api/user-account",upload.single("profile_img"), async (req,res) =>{
     try {
         if(req.session.user){
-            const { firstname ,lastname,phone ,password } = req.body;
-            const imageName = req.file.filename;
-            const user = await UsersModel.findOne({ _id : req.session.user.user_id });
-            if (user) {
-                await UsersModel.updateMany(
-                    { _id: req.session.user.user_id },
-                    { $set: { firstname: firstname, lastname: lastname, phone: phone, password: password,profile_img : imageName } }
-                );                
-                const new_user = await UsersModel.findOne({ _id : req.session.user.user_id });
-                return res.json(new_user);
-            }
+            if(req.session.user.role == 'User'){
+                const { firstname ,lastname,phone ,password } = req.body;
+                const imageName = req.file.filename;
+                const user = await UsersModel.findOne({ _id : req.session.user.user_id });
+                if (user) {
+                    await UsersModel.updateMany(
+                        { _id: req.session.user.user_id },
+                        { $set: { firstname: firstname, lastname: lastname, phone: phone, password: password,profile_img : imageName } }
+                    );                
+                    const new_user = await UsersModel.findOne({ _id : req.session.user.user_id });
+                    return res.json(new_user);
+            }}
             else{
-                res.status(204).send("No user with this id");
-            }
+                const { club_name ,password } = req.body;
+                const imageName = req.file.filename;
+                const club = await ClubModel.findOne({ _id : req.session.user.user_id });
+                if (club) {
+                    await ClubModel.updateMany(
+                        { _id: req.session.user.user_id },
+                        { $set: { club_name: club_name,  password: password,club_img : imageName } }
+                    );                
+                    const new_club = await ClubModel.findOne({ _id : req.session.user.user_id });
+                    return res.json(new_club);
+            }}
         }
         else{
             res.sendStatus(206);
@@ -354,13 +403,25 @@ app.post("/api/user-account",upload.single("profile_img"), async (req,res) =>{
 app.get("/api/username-account", async (req,res) =>{
     try {
         if(req.session.user){
-            const user = await UsersModel.findOne({ _id : req.session.user.user_id });
-            if (user) {
-                return res.send([user.firstname,user.lastname,user.email,user.phone,user.profile_img]);
+            if(req.session.user.role == 'User'){
+                const user = await UsersModel.findOne({ _id : req.session.user.user_id });
+                if (user) {
+                    return res.send([user.firstname,user.lastname,user.email,user.phone,user.profile_img]);
+                }
+                else{
+                    res.status(204).send("No user with this id");
+                }
             }
             else{
-                res.status(204).send("No user with this id");
+                const club = await ClubModel.findOne({ _id : req.session.user.user_id });
+                if (club) {
+                    return res.send([club.club_name,club.email,club.club_img]);
+                }
+                else{
+                    res.status(204).send("No club with this id");
+                }
             }
+            
         }
         else{
             res.sendStatus(206);
@@ -398,4 +459,57 @@ app.post("/api/user-profile-pic",upload.single("file"),async (req,res) =>{
 
 })
 
+// add workshops
+
+app.post("/api/add-workshop",upload.single("profile_img"), async (req, res) => {
+    try {
+        if (req.session.user ) {
+            if(req.session.user.role == "Club"){
+                const {title ,date ,lang,time, duration, trainers ,max_participants, salle,profile_img} =  req.body;
+                const imageName = req.file.filename;
+                const club_id = String(req.session.user.user_id);
+                const club = String(req.session.user.username);
+                let w = await ClubWorkShopsModel.findOne({ club_id: club_id });
+                const new_workshop = await WorkShopsModel.create({club : club , title:title ,image:imageName, date:date,lang:lang,time:time,duration:duration,trainers:trainers,max_participants:max_participants,salle:salle});
+                if (w) {
+                    await ClubWorkShopsModel.updateOne({ club_id: club_id }, { $set: { work_id: [...w.work_id, String(new_workshop._id)] } });
+                    return res.send("WorkShop Added");
+                }
+            }
+        } else {
+            return res.status(203).send('only with user account');
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+// delete workshops
+
+app.get("/api/clubimg/:name", async (req, res) => {
+    try {
+        const resultat  = await ClubModel.findOne({club_name : req.params.name});
+        res.send(resultat.club_img);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+app.get("/api/workshopslength", async (req, res) => {
+    try {
+        if (req.session.user ) {
+            if(req.session.user.role == "Club"){
+                const resultat  = await ClubWorkShopsModel.findOne({club_id: req.session.user.user_id});
+                if(resultat.work_id.length == 0){
+                    res.sendStatus(202);
+                }
+                else{
+                    res.send("ok");
+                }
+            }
+        } 
+    }catch (error) {
+        res.status(400).send(error.message);
+    }
+});
 
