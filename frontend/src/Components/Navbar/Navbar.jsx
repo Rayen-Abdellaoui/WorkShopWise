@@ -29,7 +29,7 @@ function AppNavbar(props){
                         <Nav className="me-auto coll">
                             <Nav.Link href="/"><BiHome /> Home</Nav.Link>
                             {props.role == "User" ? (<Nav.Link href="/myworkshop">< BsCalendar2Date /> My WorkShops</Nav.Link>) : (<></>)} 
-                            {props.role == "Club" ? (<Nav.Link href="/club-profile"><BsCalendar4Event />Profile</Nav.Link>) : (<></>)} 
+                            {props.role == "Club" ? (<Nav.Link href="/club-profile"><BsCalendar4Event /> Profile</Nav.Link>) : (<></>)} 
                             <Nav.Link href="/workshops/1"><GrWorkshop /> Workshops</Nav.Link>
                             {props.role == "User" ? (<Nav.Link href="/account"><RiContactsLine /> Account</Nav.Link>) : 
                             (<></>)}     

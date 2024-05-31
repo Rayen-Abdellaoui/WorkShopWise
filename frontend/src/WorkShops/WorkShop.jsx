@@ -17,7 +17,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 
-function WorkShop(){
+function WorkShop(props){
   const [workshop, setWorkshop] = useState([]);
   const [buttonstatus, setButtonstatus] = useState(false);
   const [subscription, setSubscription] = useState(false);
@@ -79,7 +79,10 @@ function WorkShop(){
 
 
   let button;
-  if (buttonstatus) {
+  if(props.role === "Club"){
+    button = <MDBBtn style={{ fontSize: "1.3rem" }} className="card-button" disabled>Must Be user</MDBBtn>;
+  }
+  else if (buttonstatus) {
     button = <MDBBtn style={{ fontSize: "1.3rem" }} className="card-button" disabled>Workshop is Full</MDBBtn>;
   } else if (subscription) {
     button = <MDBBtn onClick={handleSubscribtion} className="card-button" >Cancel</MDBBtn>;
