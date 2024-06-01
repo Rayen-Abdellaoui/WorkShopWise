@@ -43,9 +43,8 @@ function Account() {
         <MDBContainer className="py-5 " style={{ width:'80%' }}>
           <MDBRow className="justify-content-center align-items-center">
             <MDBCol lg="!6" className="mb-4 mb-lg-0">
-              <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
-                <MDBRow className="g-0">
-                  <MDBCol md="8" style={{backgroundColor:"#f0eeed"}}>
+              <MDBCard className="mb-3" style={{ borderRadius: '10px' }}>
+                <MDBRow className="g-0" style={{backgroundColor:"#f0eeed"}}>
                     <MDBCardBody className="p-4">
                       <MDBTypography style={{fontFamily :"Rubik",fontSize : "1.5rem",fontWeight:"bold",color:"black"}} tag="h6">Add New WorkShop</MDBTypography>
                       <hr/>
@@ -120,7 +119,6 @@ function Account() {
                         </MDBRow>
                       </form>
                     </MDBCardBody>
-                  </MDBCol>
                 </MDBRow>
               </MDBCard>
             </MDBCol>

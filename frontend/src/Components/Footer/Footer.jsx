@@ -19,11 +19,11 @@ function Footer() {
         <div className="footer-container">
           <div className="parag-container">
             <p>Looking for a partner to manage your WorkShops?</p>
-            <button className='footer-button'>Let's GO <GrFormNext /></button>
+            <a href="/workshops/1"><button className='footer-button'>Let's GO <GrFormNext /></button></a>
           </div>
           <div className='links-container'>
             <Nav.Link href="/"><BiHome /> Home</Nav.Link>
-            <Nav.Link href="/workshops"><GrWorkshop /> Workshops</Nav.Link>
+            <Nav.Link href="/workshops/1"><GrWorkshop /> Workshops</Nav.Link>
             <Nav.Link href="/contact"><LiaTelegramPlane /> Contact</Nav.Link>                       
             <Nav.Link href="about"><GiHelp /> About</Nav.Link>
           </div>

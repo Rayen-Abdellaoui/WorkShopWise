@@ -12,7 +12,7 @@ function HomeVid() {
           <div className='d-flex justify-content-center align-items-center h-100'>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', alignItems: 'center', justifyItems: 'center' }}>
             <h1 className='text-white mb-0'style={{color:"black",fontSize:"64px"}}>Get started today with workshopwise</h1>
-            <Butn />
+            <a href="/workshops/1"><Butn /></a>
           </div>
           </div>
         </div> 

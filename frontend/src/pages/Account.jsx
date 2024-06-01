@@ -139,7 +139,9 @@ function Account() {
                         </MDBRow>
                         <MDBRow className="pt-1" style={{marginBottom :"10px" ,display:"flex",justifyContent:"center" }} >
                         <MDBCol size="6" className="mb-3">
-                          <input    type="file" name="profile_img" id="profile_img" onChange={(e) =>{setProfileimg(e.target.files[0])}} />
+                          <FloatingLabel controlId="floatingInput" label="Profile Picture"  >
+                            <Form.Control style={{border:"solid 2px"}}type="file" name="profile_img" id="profile_img" onChange={(e) =>{setProfileimg(e.target.files[0])}}  placeholder="Profile Picture" />
+                          </FloatingLabel>
                           </MDBCol>
                         </MDBRow>
                         <MDBRow className="pt-1" style={{marginBottom :"10px" ,display:"flex",justifyContent:"center" }} >

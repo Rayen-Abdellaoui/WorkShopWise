@@ -46,6 +46,7 @@ function MyWorkshop(){
         <>
                     {Array.isArray(workshops) && workshops.length > 0 ? (
                         workshops.map((workshop) => (
+                            <MDBContainer>
                             <MDBRow key={workshop._id}>
                                 <MyWorkshopCard
                                     title={workshop.title}
@@ -58,6 +59,7 @@ function MyWorkshop(){
                                     id={workshop._id}
                                 />
                             </MDBRow>
+                            </MDBContainer>
                         ))
                     ) : (
                         <>
