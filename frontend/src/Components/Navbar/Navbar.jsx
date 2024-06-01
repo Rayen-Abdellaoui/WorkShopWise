@@ -36,7 +36,7 @@ function AppNavbar(props){
                             <Nav.Link href="/workshops/1"><GrWorkshop /> Workshops</Nav.Link>
                             {props.role == "User" ? (<Nav.Link href="/account"><RiContactsLine /> Account</Nav.Link>) : 
                             (<></>)}     
-                            <Nav.Link href="/contact"><LiaTelegramPlane /> Contact</Nav.Link>                       
+                            {props.user? (<></>) : (<Nav.Link href="/contact">< LiaTelegramPlane /> Contact</Nav.Link>)}                 
                             <Nav.Link href="about"><GiHelp /> About</Nav.Link>
                         </Nav>
                         {props.user ? (<> <Logout /> </>) : 

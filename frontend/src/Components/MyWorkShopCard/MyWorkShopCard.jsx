@@ -96,10 +96,10 @@ function MyWorkshopCard(props){
             </div>
           </Sheet>
           <Box sx={{ display: 'flex', justifyContent:"space-around", flexWrap:"wrap" }}>
-            <a href={`/workshop/${props.id}`}><Button     style={{margin :"3px",width:"30%",minWidth :"200px",backgroundColor :"#a08ae8",fontFamily :"Rubik",fontSize : "1.1rem",fontWeight:"bold"}}>
+            <a href={`/workshop/${props.id}`}><Button     style={{margin :"3px",width:"30%",minWidth :"250px",backgroundColor :"#a08ae8",fontFamily :"Rubik",fontSize : "1.1rem",fontWeight:"bold"}}>
               View  WorkShop
             </Button></a>
-            <Button onClick={handleDelete} color='danger' style={{margin :"3px",width : "30%",minWidth :"200px",fontFamily :"Rubik",fontSize : "1.1rem",fontWeight:"bold"}}>
+            <Button onClick={handleDelete} color='danger' style={{margin :"3px",width : "30%",minWidth :"250px",fontFamily :"Rubik",fontSize : "1.1rem",fontWeight:"bold"}}>
               Delete WorkShop
             </Button>
           </Box>
