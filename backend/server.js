@@ -88,7 +88,7 @@ app.post("/club/login",  async(req, res) => {
                 res.send("Wrong Password");
         }
         else{
-            res.send("No club with this email")
+            res.send("No clubs with this email")
         }
     })
     .catch(err => console.log(err));
